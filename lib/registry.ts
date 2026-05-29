@@ -5,6 +5,7 @@ import PrimaryButton from "@/components/blocks/buttons/primary-button";
 import IconButton from "@/components/blocks/buttons/icon-button";
 import StatCard from "@/components/blocks/cards/stat-card";
 import PlaywrightResult from "@/components/blocks/widgets/playwright-result";
+import SimpleInCard from "@/components/blocks/tables/simple-in-card";
 
 export type BlockMeta = {
   slug: string;
@@ -58,6 +59,22 @@ export const registry: Category[] = [
         description: "Compact KPI tile with delta indicator.",
         sourcePath: "components/blocks/cards/stat-card.tsx",
         Component: StatCard,
+      },
+    ],
+  },
+  {
+    slug: "tables",
+    title: "Tables",
+    description:
+      "Data tables — sortable rows, status pills, in-row actions, all wrapped in your favorite container.",
+    blocks: [
+      {
+        slug: "simple-in-card",
+        title: "Simple in card",
+        description:
+          "A simple data table inside a rounded card with a title, action button, and footer.",
+        sourcePath: "components/blocks/tables/simple-in-card.tsx",
+        Component: SimpleInCard,
       },
     ],
   },
