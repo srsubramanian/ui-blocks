@@ -16,6 +16,7 @@ A personal Tailwind component library built with Next.js 14 (App Router), React,
 When working on something the skill covers, read its `SKILL.md` first. These skills aren't auto-loaded; they're checked in here so they travel with the repo.
 
 - **`skills/revealjs/SKILL.md`** — Building reveal.js slide-deck widgets. Covers the `@revealjs/react` setup, embedded-deck configuration, slide content patterns, theming, and gotchas specific to this Next.js project. Read whenever the user mentions reveal.js, slide decks, presentations, or deck embeds.
+- **`skills/mermaid/SKILL.md`** — Building Mermaid-powered diagram blocks (architecture, flowchart, sequence). Covers the `<Mermaid />` helper, the AWS icon pack at `lib/icon-packs/aws.json` and how to extend it, registering other iconify packs (Azure, GCP, logos), dark-theme tuning, and Next.js integration gotchas. Read whenever the user mentions Mermaid, architecture diagrams, flowcharts, or any kind of diagram block.
 
 ## Adding a new block
 

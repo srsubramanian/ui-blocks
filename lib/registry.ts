@@ -8,6 +8,7 @@ import PlaywrightResult from "@/components/blocks/widgets/playwright-result";
 import SimpleInCard from "@/components/blocks/tables/simple-in-card";
 import SimpleDeck from "@/components/blocks/decks/simple-deck";
 import ArchitectureCard from "@/components/blocks/diagrams/architecture-card";
+import AwsArchitectureCard from "@/components/blocks/diagrams/aws-architecture-card";
 
 export type BlockMeta = {
   slug: string;
@@ -93,6 +94,14 @@ export const registry: Category[] = [
           "System architecture diagram using mermaid's architecture-beta type. Edge → app → data, with services grouped into tiers.",
         sourcePath: "components/blocks/diagrams/architecture-card.tsx",
         Component: ArchitectureCard,
+      },
+      {
+        slug: "aws-architecture-card",
+        title: "AWS architecture card",
+        description:
+          "Same shape as Architecture card but rendered with the official AWS architecture icon set. Lazy-loads a 99-service icon pack registered with mermaid.",
+        sourcePath: "components/blocks/diagrams/aws-architecture-card.tsx",
+        Component: AwsArchitectureCard,
       },
     ],
   },

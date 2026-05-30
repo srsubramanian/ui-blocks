@@ -10,6 +10,25 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 
+/** An iconify-format icon pack. The lazy loader returns this shape. */
+type IconifyPack = {
+  prefix: string;
+  icons: Record<string, { body: string; width?: number; height?: number }>;
+  width?: number;
+  height?: number;
+};
+
+/** An icon pack to register before render. The `loader` returns either the
+ *  pack itself, or a default-export of one (so `() => import("@/lib/icon-packs/aws.json")`
+ *  works directly). The pack is fetched and registered once per name; calling
+ *  Mermaid with the same pack array on a second render is cheap. */
+export type IconPack = {
+  name: string;
+  loader: () => Promise<IconifyPack | { default: IconifyPack }>;
+};
+
+const registeredPacks = new Set<string>();
+
 type Props = {
   /** The Mermaid chart source. Any diagram type mermaid supports. */
   chart: string;
@@ -17,9 +36,17 @@ type Props = {
   maxWidth?: string;
   /** Optional className applied to the outer wrapper. */
   className?: string;
+  /** Iconify packs to register with mermaid before rendering. Loaders are
+   *  awaited in parallel and registered exactly once per name (idempotent). */
+  iconPacks?: IconPack[];
 };
 
-export function Mermaid({ chart, maxWidth = "100%", className = "" }: Props) {
+export function Mermaid({
+  chart,
+  maxWidth = "100%",
+  className = "",
+  iconPacks,
+}: Props) {
   const reactId = useId();
   // mermaid's render() requires an id that's a valid CSS selector — strip
   // colons that React's useId injects.
@@ -53,6 +80,24 @@ export function Mermaid({ chart, maxWidth = "100%", className = "" }: Props) {
           gantt: { useMaxWidth: true },
         });
 
+        // Register icon packs, if any. Each pack is fetched and registered
+        // exactly once per process; subsequent renders skip the work.
+        if (iconPacks && iconPacks.length) {
+          const toRegister = iconPacks.filter((p) => !registeredPacks.has(p.name));
+          if (toRegister.length) {
+            const packs = await Promise.all(
+              toRegister.map(async (p) => {
+                const loaded = await p.loader();
+                const iconsModule =
+                  "default" in loaded ? loaded.default : loaded;
+                return { name: p.name, icons: iconsModule };
+              })
+            );
+            mermaid.registerIconPacks(packs);
+            for (const p of toRegister) registeredPacks.add(p.name);
+          }
+        }
+
         const { svg } = await mermaid.render(renderId, chart);
         if (cancelled) return;
         if (containerRef.current) {
@@ -71,7 +116,7 @@ export function Mermaid({ chart, maxWidth = "100%", className = "" }: Props) {
     return () => {
       cancelled = true;
     };
-  }, [chart, renderId]);
+  }, [chart, renderId, iconPacks]);
 
   if (error) {
     return (
