@@ -7,6 +7,7 @@ import StatCard from "@/components/blocks/cards/stat-card";
 import PlaywrightResult from "@/components/blocks/widgets/playwright-result";
 import SimpleInCard from "@/components/blocks/tables/simple-in-card";
 import SimpleDeck from "@/components/blocks/decks/simple-deck";
+import ArchitectureCard from "@/components/blocks/diagrams/architecture-card";
 
 export type BlockMeta = {
   slug: string;
@@ -76,6 +77,22 @@ export const registry: Category[] = [
           "A simple data table inside a rounded card with a title, action button, and footer.",
         sourcePath: "components/blocks/tables/simple-in-card.tsx",
         Component: SimpleInCard,
+      },
+    ],
+  },
+  {
+    slug: "diagrams",
+    title: "Diagrams",
+    description:
+      "Mermaid-powered diagrams in a card — architecture, flows, sequences. Edit a string, get a rendered SVG.",
+    blocks: [
+      {
+        slug: "architecture-card",
+        title: "Architecture card",
+        description:
+          "System architecture diagram using mermaid's architecture-beta type. Edge → app → data, with services grouped into tiers.",
+        sourcePath: "components/blocks/diagrams/architecture-card.tsx",
+        Component: ArchitectureCard,
       },
     ],
   },
