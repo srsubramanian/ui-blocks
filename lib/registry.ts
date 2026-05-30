@@ -6,6 +6,7 @@ import IconButton from "@/components/blocks/buttons/icon-button";
 import StatCard from "@/components/blocks/cards/stat-card";
 import PlaywrightResult from "@/components/blocks/widgets/playwright-result";
 import SimpleInCard from "@/components/blocks/tables/simple-in-card";
+import SimpleDeck from "@/components/blocks/decks/simple-deck";
 
 export type BlockMeta = {
   slug: string;
@@ -75,6 +76,22 @@ export const registry: Category[] = [
           "A simple data table inside a rounded card with a title, action button, and footer.",
         sourcePath: "components/blocks/tables/simple-in-card.tsx",
         Component: SimpleInCard,
+      },
+    ],
+  },
+  {
+    slug: "decks",
+    title: "Decks",
+    description:
+      "reveal.js-powered slide decks embedded inside a card. For tours, onboarding, in-app presentations.",
+    blocks: [
+      {
+        slug: "simple-deck",
+        title: "Simple deck",
+        description:
+          "Five-slide embedded deck demonstrating fragments, code highlighting, and gradient backgrounds. Built with @revealjs/react.",
+        sourcePath: "components/blocks/decks/simple-deck.tsx",
+        Component: SimpleDeck,
       },
     ],
   },
